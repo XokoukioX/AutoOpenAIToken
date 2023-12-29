@@ -8,6 +8,8 @@ import time
 import undetected_chromedriver as uc
 import random
 import os
+import re
+
 
 try:
     os.remove("token.txt")
@@ -53,3 +55,35 @@ access_token_file_path = 'token.txt'
 with open(access_token_file_path, 'w') as file:
     file.write(access_token)
 print("保存为token.txt成功！")
+
+
+file_path = r'C:\Users\zymooll\Desktop\Kawakaze\QBOT_\chatgpt-mirai-qq-bot\config.cfg'
+# 显式指定使用UTF-8编码打开文件
+with open(file_path, 'r', encoding='utf-8') as file:
+    file_content = file.read()
+
+# 在这之后，继续进行操作...
+
+# 定义正则表达式模式，匹配access_token的值
+pattern = re.compile(r'(access_token\s*=\s*")[^"]+(")')
+
+# 使用正则表达式查找匹配的文本
+match = pattern.search(file_content)
+
+if match:
+    # 获取匹配到的access_token的值
+    old_access_token = match.group(1)  # 使用 group(1) 获取括号内的部分
+
+    # 新的access_token的值
+    new_access_token = access_token
+
+    # 替换access_token的值
+    file_content = pattern.sub(rf'\g<1>{new_access_token}\g<2>', file_content)
+
+    # 将替换后的内容写回文件
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(file_content)
+
+    print(f'文件 {file_path} 中的 access_token 已被替换。')
+else:
+    print('未找到匹配的 access_token。')
