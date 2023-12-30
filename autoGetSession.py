@@ -33,7 +33,7 @@ chrome_options.add_argument(f'--user-data-dir={user_data_dir}')
 
 driver = uc.Chrome(options=chrome_options)
 print("打开灌水会话")
-driver.get('https://chat.openai.com/c/74c3bf9f-3396-4aa0-b478-726949a4bdd4')
+driver.get('https://chat.openai.com/c/')#这后面填写你的回话ID(e.g 75342f9f-3396-4a40-bt78-7234949a4bdd4)
 print("发送问题")
 WebDriverWait(driver, 20).until(EC.visibility_of_element_located(
     (By.XPATH, "/html/body/div[1]/div[1]/div[2]/main/div[2]/div[2]/form/div/div/div/textarea"))).send_keys(question)
